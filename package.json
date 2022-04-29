@@ -1,10 +1,11 @@
-{ 
-  
+{
   "name": "primeraentrega-coder-30915",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
     "express": "^4.17.3",
+    "firebase": "^9.6.11",
+    "firebase-admin": "^10.1.0",
     "knex": "^0.95.15",
     "mongoose": "^6.3.1",
     "mysql": "^2.18.1",

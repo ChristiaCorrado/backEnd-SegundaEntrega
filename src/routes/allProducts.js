@@ -15,10 +15,10 @@ routerProductos.get("/", async (req, res) => {
 });
 
 routerProductos.post("/", async (req, res) => {
-
+  console.log(`entro en enviarproducto a la bass`);
   const newArticle = req.body
-  console.log(newArticle);
-  //await product.saveNewProduct(req.body)
+  console.log(req.body);
+  await product.saveNewProduct(req.body)
 
   res.json(req.body)
   
