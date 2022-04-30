@@ -22,7 +22,7 @@ routerCarrito.delete("/:id", async (req, res) => {
 });
 
 routerCarrito.get("/:id/productos", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const cart = await cartC.getCartById(id);
   res.json(cart);
 });

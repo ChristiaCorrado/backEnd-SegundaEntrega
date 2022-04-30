@@ -1,5 +1,8 @@
 const admin = require("firebase-admin");
 const serviceAccount = require("../../dataBase/firebase/ecommercentf-firebase-adminsdk-h867s-4894494d42.json");
+const productoDao = require("../DAOs/products/prductsDaoMongoDb")
+const products = new productoDao
+
 
 class ContenedorCartsF {
   constructor() {
@@ -34,7 +37,7 @@ class ContenedorCartsF {
     const db = admin.firestore();
     const query = db.collection("carritos");
     let today = new Date().toLocaleString();
-
+    
     try {
       const newCart = await query
         .add({
@@ -73,25 +76,40 @@ class ContenedorCartsF {
     }
   }
 
-  async addProductToCartById(id, productToAdd) {
+  async addProductToCartById(idCart, idProd) {
     const db = admin.firestore();
     const query = db.collection("carritos");
     const time = new Date().toLocaleString();
-
+    const productToAdd = JSON.parse(JSON.stringify(await products.getProductById(idProd)))
+    
     try {
-      var docRef = await this.getCartById(id)
+      var docRef = await this.getCartById(idCart)
       const support = docRef.article
-      const newCart = {
-        article: [...support, productToAdd ],
-        timestamp:time
-      } 
-      
-      console.log(newCart);
-      
-      const updated = await query.doc(id).set(newCart)
+      if (support) {
+        console.log(`entro en if`);
+        const newCart = {
+          article: [...support, productToAdd ],
+          timestamp:time
+        } 
+        
+        
+        console.log(idCart);
+        const updated = await query.doc(idCart).set(newCart)
+        
+      }else{
+        console.log(`entro en else`);
+        
+        const nCart = {
+          article: [ productToAdd ],
+          timestamp:time
+        } 
+        console.log(nCart);
+        const updated = await query.doc(idCart).set(nCart)
+        
+      }
     } catch (error) {
       return console.log(
-        "Error al agregar el producto al carrito",- 
+        "Error al agregar el producto al carrito", 
         error.message
       );
     }
@@ -106,8 +124,8 @@ class ContenedorCartsF {
 
       var docRef = await this.getCartById(idCart)
       const support = docRef.article
-      
-      const deleteProd = support.filter((p) => p.id != idProduct);
+      console.log(support);
+      const deleteProd = support.filter((p) => p._id != idProduct);
       
       console.log(deleteProd);
 

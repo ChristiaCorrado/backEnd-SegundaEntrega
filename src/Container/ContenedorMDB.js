@@ -35,7 +35,7 @@ class ContenedorMongoDB {
   async saveNewProduct(newProduct) {
     try {
       console.log(newProduct);
-      await this.CRUDmongoose;
+      await this.connectMongoose();
       const data = await this.getAll();
       console.log(data);
       const time = new Date().toLocaleString();
@@ -55,7 +55,7 @@ class ContenedorMongoDB {
       console.log(newProduct);
 
       await productSchema.create(newProduct);
-      mongoose.disconnect();
+      await mongoose.disconnect();
     } catch (error) {
       console.log(`saveNewProducto ${error.message}`);
     }
