@@ -16,7 +16,7 @@ routerCarrito.post("/",async (req, res) => {
 });
 
 routerCarrito.delete("/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const cart = await cartC.deleteCartById(id);
   res.json(cart);
 });
@@ -28,15 +28,18 @@ routerCarrito.get("/:id/productos", async (req, res) => {
 });
 
 routerCarrito.post("/:id/productos", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const products = req.body;
   const cartActualizado = await cartC.addProductToCartById(id, products);
   res.json(cartActualizado);
 });
 
 routerCarrito.delete("/:id/productos/:productId", async (req, res) => {
-  const id = parseInt(req.params.id);
-  const productId = parseInt(req.params.productId);
+  const id = req.params.id;
+  const productId = req.params.productId;
+ 
+  console.log(id);
+  console.log(productId);
   const cart = await cartC.deleteProductCartById(id, productId);
   res.json(cart);
 });
