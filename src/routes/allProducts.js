@@ -7,11 +7,14 @@ const express = require("express");
 const routerProductos = express.Router();
 
 
+
+
+
 routerProductos.get("/", async (req, res) => {
   
   allArticles = await product.getAll()
   console.log(allArticles);
-  res.json(allArticles)
+  res.render('allProducts', allArticles)
 });
 
 routerProductos.post("/", async (req, res) => {
@@ -43,6 +46,9 @@ routerProductos.get("/:id", async (req, res) => {
   const filter = await product.getProductById(id) ;
   res.json(filter);
 })
+
+
+
 
 
 module.exports = routerProductos;
