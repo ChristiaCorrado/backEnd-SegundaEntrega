@@ -13,7 +13,7 @@ const routerProductos = express.Router();
 routerProductos.get("/", async (req, res) => {
   
   allArticles = await product.getAll()
-  console.log(allArticles);
+  console.log('renderizar prodictos');
   res.render('allProducts', allArticles)
 });
 

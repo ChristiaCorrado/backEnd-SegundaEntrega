@@ -1,21 +1,18 @@
 //express import
 const express = require("express");
 const admin = express.Router();
+const {isAuthenticated} = require("../middleware/auth")
 
-admin.get("/:nombre", async (req, res, next) => {
-  try {
-    const admLogin = { admin: req.params.nombre };
+const cookieParser = require("cookie-parser");
+const session = require('express-session');
 
-    res.render("admin", {admLogin});
-  } catch (e) {
-    next(e);
-  }
-});
 
-admin.post( '/logout', (req, res)=>{
+
+admin.post( '/logout', isAuthenticated,(req, res)=>{
+  console.log(req.session);
+  res.redirect('/login');
+
   
-
-  req.session.destroy()
 })
 
 module.exports = admin;
