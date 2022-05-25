@@ -16,7 +16,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 //persistencia
 const usuarios = [
-  { username: 'ccorrado', password: '1234', admin : true },
+  { username: 'admin', password: '1234', admin : true },
   { username: 'jose', password: '1234'  }
 ]
 
