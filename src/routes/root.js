@@ -15,10 +15,14 @@ const LocalStrategy = require('passport-local').Strategy;
 
 
 //persistencia
-const usuarios = [
-  { username: 'admin', password: '1234', admin : true },
-  { username: 'jose', password: '1234'  }
-]
+
+const userDao = require("../DAOs/users/usersDao");
+const users = new userDao;
+
+// const usuarios = [
+//   { username: 'admin', password: '1234', admin : true },
+//   { username: 'jose', password: '1234'  }
+// ]
 
 
 //<<<<<<<<<<<< MONGO >>>>>>>>>>>>
@@ -58,17 +62,17 @@ passport.use(
 
   new LocalStrategy(
     { passReqToCallback: true },
-    (req, username, password, done) => {
+     async (req, username, email, done) => {
       console.log('entro signup')
-      const existe = usuarios.find((usuario) => {
-        return usuario.nombre == username
-      })
-
+      
+      const existe = await users.findUser(username, email)
+      
+      console.log(existe);
       if (existe) {
         return done(null, false)
       } else {
-        usuarios.push({ username: username, password: password })
-        console.log(usuarios)
+        await users.saveNewUser(req.body)
+        
         done(null, { username: username })
       }
     }
@@ -77,19 +81,17 @@ passport.use(
 
 passport.use(
   'login',
-  new LocalStrategy((username, password, done) => {
+  new LocalStrategy(async (username, password, done) => {
     console.log('entro passpor local strategy')
-    const existe = usuarios.find((usuario) => {
-      return usuario.username == username && usuario.password == password 
-    })
+    const existe = await users.findUser(username, password)
     console.log(existe)
+
     if (!existe) {
       return done(null, false)
     } else {
       
-      
       console.log(existe);
-      return done(null, {username: existe.username, admin: existe.admin})
+      return done(null, {username: username})
     }
     
   })
@@ -101,10 +103,12 @@ passport.serializeUser((usuario, done) => {
   done(null, usuario.username)
 })
 
-passport.deserializeUser((nombre, done) => {
-  const usuarioDz = usuarios.find((usuario) => usuario.username == nombre)
-  console.log(JSON.stringify(usuarioDz) + ' desserializado')
-  done(null, usuarioDz)
+passport.deserializeUser(async (usuario, done) => {
+  console.log(usuario);
+  const usuarioDzFinded = await users.findUser(usuario)
+
+  console.log(JSON.stringify(usuarioDzFinded) + ' desserializado')
+  done(null, usuarioDzFinded)
 })
 
 //registrar
