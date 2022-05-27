@@ -25,7 +25,7 @@ class ContenedorUsersMongoDB {
       await this.connectMongoose();
 
       let allUsers = await userSchema.find({});
-
+      
       return allUsers;
     } catch (error) {
       return console.log(`hay error ${error.message}`);
@@ -48,6 +48,23 @@ class ContenedorUsersMongoDB {
     try {
       await this.connectMongoose();
       const result = await userSchema.find({username:username,password:password});
+
+      if (result.length==0) {
+        return null
+      }else{
+
+        return result;
+      }
+      
+    } catch (error) {
+      return console.log("Error al obtener el usuario " + error.message);
+    }
+  }
+
+  async findOne(username) {
+    try {
+      await this.connectMongoose();
+      const result = await userSchema.find({username:username});
 
       if (result.length==0) {
         return null
