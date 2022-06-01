@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const CRUDmongoose = () =>{
     try{
-        const URL = 'mongodb+srv://admin:1234@cluster0.d5rwo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+        const URL = process.env.MONGO_URL
         let rta =  mongoose.connect(URL,{
             useNewUrlParser: true,
             useUnifiedTopology:true
