@@ -19,16 +19,17 @@ calculo.get('/info', (_req, res) => {
     res.status(200).json(processInfo);
 })
 
-const randomNumbersGeneratorFork = fork('../randomNumber/randomN.js')
+const randomNumbersFork = fork('./src/randomNumber/randomN.js')
 
 calculo.get('/randoms', (req, res) => {
+    const cantidad =  5000;
     
-    const cant = req.query.cant || 5000;
-    
-    randomNumbersGeneratorFork.on('message', (resultado) => {
-        res.status(200).json(resultado);
+    randomNumbersFork.send(cantidad)
+
+    randomNumbersFork.on('message', (resultado) => {
+        res.json({resultado});
     })
-    randomNumbersGeneratorFork.send(cant);
+     
     
 })
 
