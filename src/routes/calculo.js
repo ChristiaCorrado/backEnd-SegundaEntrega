@@ -13,10 +13,11 @@ calculo.get('/info', (_req, res) => {
         title: process.title,
         execPath: process.execPath,
         processId: process.pid,
-        rss: process.memoryUsage().rss
+        rss: process.memoryUsage().rss,
+        fyh: Date.now()
     }; 
     
-    res.status(200).json(processInfo);
+    res.send(`<span>${processInfo}</span>`); 
 })
 
 const randomNumbersFork = fork('./src/randomNumber/randomN.js')

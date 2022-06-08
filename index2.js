@@ -8,7 +8,7 @@ const randomNumero = require("./src/routes/calculo")
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 
-app.set('port', process.env.PORT || 8082)
+app.set('port', process.env.PORT || 8083)
 
 app.use(`/api`, router);
 app.use('/', rootSession)
@@ -22,8 +22,3 @@ app.set("view engine", "ejs");
 
 
 //app.use(express.static("./public"));
-
-
-
-
-
