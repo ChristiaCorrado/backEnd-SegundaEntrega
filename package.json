@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "autocannon": "^7.9.0",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.7",
@@ -10,6 +11,7 @@
     "express-session": "^1.17.2",
     "firebase": "^9.6.11",
     "firebase-admin": "^10.1.0",
+    "forever": "^4.0.3",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.15",
     "local": "^0.3.3",

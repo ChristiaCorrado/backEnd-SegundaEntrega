@@ -1,8 +1,9 @@
 //express import`
 const express = require("express");
 const calculo = express.Router();
+const os = require('os')
 
-
+const numCPUs = os.cpus().length
 //fork
 const { fork } = require('child_process');
 
@@ -14,10 +15,12 @@ calculo.get('/info', (_req, res) => {
         execPath: process.execPath,
         processId: process.pid,
         rss: process.memoryUsage().rss,
-        fyh: Date.now()
+        fyh: new Date().toLocaleString,
+        numeroDeNucleos: numCPUs
+
     }; 
     
-    res.send(`<span>${processInfo}</span>`); 
+    res.send(`<h1>${JSON.stringify(processInfo,null,2)}</h1>`); 
 })
 
 const randomNumbersFork = fork('./src/randomNumber/randomN.js')
