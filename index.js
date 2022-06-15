@@ -9,6 +9,7 @@ const MODO = process.argv[2] || 'FORK'
 if (MODO === 'CLUSTER' && cluster.isMaster) {
 
   const numCPUs = os.cpus().length
+
   console.log(`procesadores disponibles  ${numCPUs}`);
   console.log(`PID MASTER ${process.pid}`);
 
@@ -33,7 +34,6 @@ if (MODO === 'CLUSTER' && cluster.isMaster) {
   const rootSession = require("./src/routes/root")
   const randomNumero = require("./src/routes/calculo")
 
-  console.log(`else`);
   const app = express();
   app.use(express.json());
   app.use(urlencoded({ extended: true }));
@@ -45,7 +45,7 @@ if (MODO === 'CLUSTER' && cluster.isMaster) {
   app.use('/', randomNumero)
 
   app.listen(app.get('port'), () => {
-    console.info('listening on port ' + app.get('port'))
+    console.info(`'listening on port' ${app.get('port')},  'PID' ${process.pid}`)
   })
 
   app.set("view engine", "ejs");

@@ -63,7 +63,6 @@ passport.use(
   new LocalStrategy(
     { passReqToCallback: true },
      async (req, username, email, done) => {
-      console.log('entro signup')
       
       const existe = await users.findUser(username, email)
       
@@ -82,15 +81,15 @@ passport.use(
 passport.use(
   'login',
   new LocalStrategy(async (username, password, done) => {
-    console.log('entro passpor local strategy')
+   
     const existe = await users.findUser(username, password)
-    console.log(existe)
+    
 
     if (!existe) {
       return done(null, false)
     } else {
       
-      console.log(existe);
+      
       return done(null, {username: username})
     }
     
@@ -104,10 +103,10 @@ passport.serializeUser((usuario, done) => {
 })
 
 passport.deserializeUser(async (usuario, done) => {
-  console.log(usuario);
+  
   const usuarioDzFinded = await users.findOne(usuario)
 
-  console.log(usuarioDzFinded);
+  
 
   console.log(JSON.stringify(usuarioDzFinded) + ' desserializado')
   done(null, usuarioDzFinded)
